@@ -1,4 +1,4 @@
-module glHelper
+module github.com/MarkSalvi/glHelper
 
 go 1.19
 
