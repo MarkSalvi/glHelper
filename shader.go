@@ -37,17 +37,17 @@ func getModifiedTime(filepath string) time.Time {
 	return file.ModTime()
 }
 
-func (shaderInfo *Shader) CheckShaderForChanges() {
+func (shader *Shader) CheckShaderForChanges() {
 
-	vertexModTime := getModifiedTime(shaderInfo.vertPath)
-	fragmentModTime := getModifiedTime(shaderInfo.fragPath)
-	if !vertexModTime.Equal(shaderInfo.vertexModified) || fragmentModTime.Equal(shaderInfo.fragmentModified) {
-		id, err := CreateProgram(shaderInfo.vertPath, shaderInfo.fragPath)
+	vertexModTime := getModifiedTime(shader.vertPath)
+	fragmentModTime := getModifiedTime(shader.fragPath)
+	if !vertexModTime.Equal(shader.vertexModified) || fragmentModTime.Equal(shader.fragmentModified) {
+		id, err := CreateProgram(shader.vertPath, shader.fragPath)
 		if err != nil {
 			fmt.Println(err)
 		} else {
-			gl.DeleteProgram(uint32(shaderInfo.id))
-			shaderInfo.id = id
+			gl.DeleteProgram(uint32(shader.id))
+			shader.id = id
 		}
 	}
 
