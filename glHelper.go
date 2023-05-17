@@ -35,7 +35,7 @@ func CreateShader(shaderSource string, shaderType uint32) ShaderID {
 	return ShaderID(shaderId)
 }
 
-func CreateProgram(vert ShaderID, frag ShaderID) {
+func CreateProgram(vert ShaderID, frag ShaderID) ProgramID {
 	shaderProgram := gl.CreateProgram()
 	gl.AttachShader(shaderProgram, uint32(vert))
 	gl.AttachShader(shaderProgram, uint32(frag))
