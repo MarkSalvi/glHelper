@@ -55,3 +55,31 @@ func CreateProgram(vert ShaderID, frag ShaderID) ProgramID {
 
 	return ProgramID(shaderProgram)
 }
+
+func GenBindBuffer(target uint32) VBOID {
+	var VBO uint32
+	gl.GenBuffers(1, &VBO)
+	gl.BindBuffer(target, VBO)
+
+	return VBOID(VBO)
+}
+
+func GenBindVertexArray() VAOID {
+	var VAO uint32
+	gl.GenVertexArrays(1, &VAO)
+	gl.BindVertexArray(VAO)
+	return VAOID(VAO)
+}
+
+func BindVertexArray(vao VAOID) {
+	gl.BindVertexArray(uint32(vao))
+}
+
+// todo add generic instead of float
+func BufferData(target uint32, data []float32, usage uint32) {
+	gl.BufferData(target, len(data)*4, gl.Ptr(data), usage)
+}
+
+func UseProgram(prog ProgramID) {
+	gl.UseProgram(uint32(prog))
+}
