@@ -53,4 +53,5 @@ func CreateProgram(vert ShaderID, frag ShaderID) ProgramID {
 	gl.DeleteShader(uint32(vert))
 	gl.DeleteShader(uint32(frag))
 
+	return ProgramID(shaderProgram)
 }
