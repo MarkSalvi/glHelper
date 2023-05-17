@@ -1,7 +1,10 @@
 package glHelper
 
 import (
+	"errors"
+	"fmt"
 	"github.com/go-gl/gl/v3.3-core/gl"
+	"os"
 	"strings"
 )
 
@@ -14,7 +17,21 @@ func GetVersion() string {
 	return gl.GoStr(gl.GetString(gl.VERSION))
 }
 
-func CreateShader(shaderSource string, shaderType uint32) ShaderID {
+func LoadShader(path string, shaderType uint32) (ShaderID, error) {
+	shaderFile, err := os.ReadFile(path)
+	if err != nil {
+		panic(err)
+	}
+	shaderFileStr := string(shaderFile)
+	shaderID, err := CreateShader(shaderFileStr, shaderType)
+	if err != nil {
+		return 0, err
+	}
+
+	return shaderID, nil
+}
+
+func CreateShader(shaderSource string, shaderType uint32) (ShaderID, error) {
 
 	shaderId := gl.CreateShader(shaderType)
 	shaderSource += "\x00"
@@ -30,15 +47,23 @@ func CreateShader(shaderSource string, shaderType uint32) ShaderID {
 		gl.GetShaderiv(shaderId, gl.INFO_LOG_LENGTH, &logLenght)
 		log := strings.Repeat("\x00", int(logLenght+1))
 		gl.GetShaderInfoLog(shaderId, logLenght, nil, gl.Str(log))
-		panic("Failed to compile Shader: \n" + log)
+		fmt.Println("Failed to compile Shader: \n" + log)
+		return 0, errors.New("Failed to compile Shader")
 	}
-	return ShaderID(shaderId)
+
+	return ShaderID(shaderId), nil
 }
 
-func CreateProgram(vertSource string, fragSource string) ProgramID {
+func CreateProgram(vertPath string, fragPath string) (ProgramID, error) {
 
-	vert := CreateShader(vertSource, gl.VERTEX_SHADER)
-	frag := CreateShader(fragSource, gl.FRAGMENT_SHADER)
+	vert, err := LoadShader(vertPath, gl.VERTEX_SHADER)
+	if err != nil {
+		return 0, err
+	}
+	frag, err := LoadShader(fragPath, gl.FRAGMENT_SHADER)
+	if err != nil {
+		return 0, err
+	}
 	shaderProgram := gl.CreateProgram()
 	gl.AttachShader(shaderProgram, uint32(vert))
 	gl.AttachShader(shaderProgram, uint32(frag))
@@ -51,12 +76,13 @@ func CreateProgram(vertSource string, fragSource string) ProgramID {
 		gl.GetProgramiv(shaderProgram, gl.INFO_LOG_LENGTH, &logLenght)
 		log := strings.Repeat("\x00", int(logLenght+1))
 		gl.GetProgramInfoLog(shaderProgram, logLenght, nil, gl.Str(log))
-		panic("Failed to link Shader Program: \n" + log)
+		return 0, errors.New("FAiled to link Program" + log)
+
 	}
 	gl.DeleteShader(uint32(vert))
 	gl.DeleteShader(uint32(frag))
 
-	return ProgramID(shaderProgram)
+	return ProgramID(shaderProgram), nil
 }
 
 func GenBindBuffer(target uint32) VBOID {
