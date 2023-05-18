@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-gl/gl/v3.3-core/gl"
-	"image/jpeg"
+	"image/png"
 	"os"
 	"strings"
 )
@@ -126,7 +126,7 @@ func LoadTexture(filename string) TextureID {
 	}
 	defer infile.Close()
 
-	img, err := jpeg.Decode(infile)
+	img, err := png.Decode(infile)
 	if err != nil {
 		panic(err)
 	}
