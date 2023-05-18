@@ -121,10 +121,10 @@ func UseProgram(prog ProgramID) {
 // todo SDL2_image or std_image
 func LoadTexture(filename string) TextureID {
 	infile, err := os.Open(filename)
+	defer infile.Close()
 	if err != nil {
 		panic(err)
 	}
-	defer infile.Close()
 
 	img, err := png.Decode(infile)
 	if err != nil {
