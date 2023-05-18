@@ -33,10 +33,10 @@ func (shader *Shader) Use() {
 func getModifiedTime(filepath string) time.Time {
 	file, err := os.Stat(filepath)
 	if err != nil {
-		if err == errors.New("no such file or directory") {
+		if err == errors.New("The system cannot find the file specified") {
 			fmt.Println(time.Now(), " ", filepath, " : ", err)
 		} else {
-			panic(err)
+			fmt.Println("l'errore e' ", err)
 		}
 	}
 	return file.ModTime()
