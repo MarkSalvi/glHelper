@@ -4,13 +4,15 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-gl/gl/v3.3-core/gl"
+	"image/jpeg"
 	"os"
 	"strings"
 )
 
 type ShaderID uint32
 type ProgramID uint32
-type bufferID uint32
+type BufferID uint32
+type TextureID uint32
 
 type Number interface {
 	[]uint32 | []float32
@@ -88,22 +90,22 @@ func CreateProgram(vertPath string, fragPath string) (ProgramID, error) {
 	return ProgramID(shaderProgram), nil
 }
 
-func GenBindBuffer(target uint32) bufferID {
+func GenBindBuffer(target uint32) BufferID {
 	var buffer uint32
 	gl.GenBuffers(1, &buffer)
 	gl.BindBuffer(target, buffer)
 
-	return bufferID(buffer)
+	return BufferID(buffer)
 }
 
-func GenBindVertexArray() bufferID {
+func GenBindVertexArray() BufferID {
 	var VAO uint32
 	gl.GenVertexArrays(1, &VAO)
 	gl.BindVertexArray(VAO)
-	return bufferID(VAO)
+	return BufferID(VAO)
 }
 
-func BindVertexArray(vao bufferID) {
+func BindVertexArray(vao BufferID) {
 	gl.BindVertexArray(uint32(vao))
 }
 
@@ -114,4 +116,53 @@ func BufferData[N Number](target uint32, data N, usage uint32) {
 
 func UseProgram(prog ProgramID) {
 	gl.UseProgram(uint32(prog))
+}
+
+// todo SDL2_image or std_image
+func LoadTexture(filename string) TextureID {
+	infile, err := os.Open(filename)
+	if err != nil {
+		panic(err)
+	}
+	defer infile.Close()
+
+	img, err := jpeg.Decode(infile)
+	if err != nil {
+		panic(err)
+	}
+
+	w := img.Bounds().Max.X
+	h := img.Bounds().Max.Y
+	pixels := make([]byte, w*h*4)
+	bIndex := 0
+
+	for y := 0; y < h; y++ {
+		for x := 0; x < w; x++ {
+			r, g, b, a := img.At(x, y).RGBA()
+			pixels[bIndex] = byte(r / 256)
+			bIndex++
+			pixels[bIndex] = byte(g / 256)
+			bIndex++
+			pixels[bIndex] = byte(b / 256)
+			bIndex++
+			pixels[bIndex] = byte(a / 256)
+			bIndex++
+		}
+	}
+	texture := GenBindTexture()
+	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT)
+	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT)
+	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+	gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+	gl.TexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, int32(w), int32(h), 0, gl.RGBA, gl.UNSIGNED_BYTE, gl.Ptr(pixels))
+	gl.GenerateMipmap(gl.TEXTURE_2D)
+	return texture
+
+}
+
+func GenBindTexture() TextureID {
+	var texID uint32
+	gl.GenTextures(1, &texID)
+	gl.BindTexture(gl.TEXTURE_2D, texID)
+	return TextureID(texID)
 }
