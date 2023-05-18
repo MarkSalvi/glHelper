@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e4d64ba3-e3f9-4051-b914-5573718a7e41" name="Changes" comment="added MakeShader func" />
+    <list default="true" id="e4d64ba3-e3f9-4051-b914-5573718a7e41" name="Changes" comment="added MakeShader func">
+      <change beforePath="$PROJECT_DIR$/shader.go" beforeDir="false" afterPath="$PROJECT_DIR$/shader.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
