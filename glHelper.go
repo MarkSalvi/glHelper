@@ -166,3 +166,7 @@ func GenBindTexture() TextureID {
 	gl.BindTexture(gl.TEXTURE_2D, texID)
 	return TextureID(texID)
 }
+
+func BindTexture(id TextureID) {
+	gl.BindTexture(gl.TEXTURE_2D, uint32(id))
+}
