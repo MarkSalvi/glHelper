@@ -1,6 +1,7 @@
 package glHelper
 
 import (
+	"errors"
 	"fmt"
 	"github.com/go-gl/gl/v3.3-core/gl"
 	"os"
@@ -32,7 +33,11 @@ func (shader *Shader) Use() {
 func getModifiedTime(filepath string) time.Time {
 	file, err := os.Stat(filepath)
 	if err != nil {
-		panic(err)
+		if err == errors.New("no such file or directory") {
+			fmt.Println(time.Now(), " ", filepath, " : ", err)
+		} else {
+			panic(err)
+		}
 	}
 	return file.ModTime()
 }
