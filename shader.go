@@ -3,6 +3,7 @@ package glHelper
 import (
 	"fmt"
 	"github.com/go-gl/gl/v3.3-core/gl"
+	"github.com/go-gl/mathgl/mgl32"
 	"os"
 	"time"
 )
@@ -65,4 +66,11 @@ func (shader *Shader) CheckShaderForChanges() error {
 		}
 	}
 	return nil
+}
+
+func (shader *Shader) SetMat4(name string, mat mgl32.Mat4) {
+	name_cstr := gl.Str(name + "\x00")
+	location := gl.GetUniformLocation(uint32(shader.id), name_cstr)
+	m4 := [16]float32(mat)
+	gl.UniformMatrix4fv(location, 1, false, &m4[0])
 }
