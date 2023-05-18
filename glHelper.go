@@ -10,8 +10,11 @@ import (
 
 type ShaderID uint32
 type ProgramID uint32
-type VAOID uint32
-type VBOID uint32
+type bufferID uint32
+
+type Number interface {
+	[]uint32 | []float32
+}
 
 func GetVersion() string {
 	return gl.GoStr(gl.GetString(gl.VERSION))
@@ -85,27 +88,27 @@ func CreateProgram(vertPath string, fragPath string) (ProgramID, error) {
 	return ProgramID(shaderProgram), nil
 }
 
-func GenBindBuffer(target uint32) VBOID {
-	var VBO uint32
-	gl.GenBuffers(1, &VBO)
-	gl.BindBuffer(target, VBO)
+func GenBindBuffer(target uint32) bufferID {
+	var buffer uint32
+	gl.GenBuffers(1, &buffer)
+	gl.BindBuffer(target, buffer)
 
-	return VBOID(VBO)
+	return bufferID(buffer)
 }
 
-func GenBindVertexArray() VAOID {
+func GenBindVertexArray() bufferID {
 	var VAO uint32
 	gl.GenVertexArrays(1, &VAO)
 	gl.BindVertexArray(VAO)
-	return VAOID(VAO)
+	return bufferID(VAO)
 }
 
-func BindVertexArray(vao VAOID) {
+func BindVertexArray(vao bufferID) {
 	gl.BindVertexArray(uint32(vao))
 }
 
 // todo add generic instead of float
-func BufferData(target uint32, data []float32, usage uint32) {
+func BufferData[N Number](target uint32, data N, usage uint32) {
 	gl.BufferData(target, len(data)*4, gl.Ptr(data), usage)
 }
 
