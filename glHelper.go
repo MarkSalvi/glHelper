@@ -4,7 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-gl/gl/v3.3-core/gl"
+	"github.com/go-gl/mathgl/mgl32"
 	"image/png"
+	"math"
 	"os"
 	"strings"
 )
@@ -169,4 +171,25 @@ func GenBindTexture() TextureID {
 
 func BindTexture(id TextureID) {
 	gl.BindTexture(gl.TEXTURE_2D, uint32(id))
+}
+
+// Rotate3DMat4 returns a 4x4 (non-homogeneous) Matrix that rotates by angle about the axis provided in the vector and an error
+//
+// vec3{1.0,0.0,0.0} rotates about axis x
+//
+// vec3{0.0,1.0,0.0} rotates about axis y
+//
+// vec3{0.0,0.0,1.0} rotates about axis z
+func Rotate3DMat4(angle float32, axis mgl32.Vec3) (mgl32.Mat4, error) {
+	sin, cos := float32(math.Sin(float64(angle))), float32(math.Cos(float64(angle)))
+	switch axis {
+	case mgl32.Vec3{1.0, 0.0, 0.0}:
+		return mgl32.Mat4{1, 0, 0, 0, 0, cos, sin, 0, 0, -sin, cos, 0, 0, 0, 0, 1}, nil
+	case mgl32.Vec3{0.0, 1.0, 0.0}:
+		return mgl32.Mat4{cos, 0, -sin, 0, 0, 1, 0, 0, sin, 0, cos, 0, 0, 0, 0, 1}, nil
+	case mgl32.Vec3{0.0, 0.0, 1.0}:
+		return mgl32.Mat4{cos, sin, 0, 0, -sin, cos, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1}, nil
+	default:
+		return mgl32.Ident4(), errors.New("Matrix rotation error")
+	}
 }
