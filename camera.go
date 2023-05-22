@@ -26,6 +26,7 @@ const (
 	Backward
 	Left
 	Right
+	Nowhere
 )
 
 func NewCamera(position, worldUp mgl32.Vec3, yaw, pitch, speed, sens float32) Camera {
@@ -67,6 +68,7 @@ func (Camera *Camera) UpdateCamera(direction Direction, deltaT, xOffset, yOffest
 		Camera.pos = Camera.pos.Sub(Camera.right.Mul(magnitude))
 	case Right:
 		Camera.pos = Camera.pos.Add(Camera.right.Mul(magnitude))
+	case Nowhere:
 	}
 	xOffset *= Camera.mouseSens
 	yOffest *= Camera.mouseSens
