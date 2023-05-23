@@ -74,3 +74,9 @@ func (shader *Shader) SetMat4(name string, mat mgl32.Mat4) {
 	m4 := [16]float32(mat)
 	gl.UniformMatrix4fv(location, 1, false, &m4[0])
 }
+
+func (shader *Shader) SetVec3(name string, vec mgl32.Vec3) {
+	name_cstr := gl.Str(name + "\x00")
+	location := gl.GetUniformLocation(uint32(shader.id), name_cstr)
+	gl.Uniform3f(location, vec.X(), vec.Y(), vec.Z())
+}
