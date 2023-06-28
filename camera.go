@@ -57,6 +57,7 @@ func (Camera *Camera) GetViewMatrix() mgl32.Mat4 {
 	return mgl32.LookAt(Camera.pos.X(), Camera.pos.Y(), Camera.pos.Z(), center.X(), center.Y(), center.Z(), Camera.up.X(), Camera.up.Y(), Camera.up.Z())
 }
 
+// GetCameraPosition function returns the current camera position as a mgl32.vec3
 func (Camera *Camera) GetCameraPosition() mgl32.Vec3 {
 	return Camera.pos
 }

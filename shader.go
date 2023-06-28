@@ -80,3 +80,9 @@ func (shader *Shader) SetVec3(name string, vec mgl32.Vec3) {
 	location := gl.GetUniformLocation(uint32(shader.id), name_cstr)
 	gl.Uniform3f(location, vec.X(), vec.Y(), vec.Z())
 }
+
+func (shader *Shader) SetFloat(name string, n float32) {
+	name_cstr := gl.Str(name + "\x00")
+	location := gl.GetUniformLocation(uint32(shader.id), name_cstr)
+	gl.Uniform1f(location, n)
+}
