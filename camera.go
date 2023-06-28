@@ -57,6 +57,10 @@ func (Camera *Camera) GetViewMatrix() mgl32.Mat4 {
 	return mgl32.LookAt(Camera.pos.X(), Camera.pos.Y(), Camera.pos.Z(), center.X(), center.Y(), center.Z(), Camera.up.X(), Camera.up.Y(), Camera.up.Z())
 }
 
+func (Camera *Camera) GetCameraPosition() mgl32.Vec3 {
+	return Camera.pos
+}
+
 func (Camera *Camera) UpdateCamera(direction Direction, deltaT, xOffset, yOffest float32) {
 	magnitude := Camera.movementSpeed * deltaT
 	switch direction {

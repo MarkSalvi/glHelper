@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e4d64ba3-e3f9-4051-b914-5573718a7e41" name="Changes" comment="mod">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="e4d64ba3-e3f9-4051-b914-5573718a7e41" name="Changes" comment="trying to solve pitch camera error">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/camera.go" beforeDir="false" afterPath="$PROJECT_DIR$/camera.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +116,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added MakeShader func" />
     <MESSAGE value="mod" />
-    <option name="LAST_COMMIT_MESSAGE" value="mod" />
+    <MESSAGE value="trying to solve pitch camera error" />
+    <option name="LAST_COMMIT_MESSAGE" value="trying to solve pitch camera error" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
