@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e4d64ba3-e3f9-4051-b914-5573718a7e41" name="Changes" comment="added function cameraGetPosition">
+    <list default="true" id="e4d64ba3-e3f9-4051-b914-5573718a7e41" name="Changes" comment="added function setFloat">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/camera.go" beforeDir="false" afterPath="$PROJECT_DIR$/camera.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/glHelper.go" beforeDir="false" afterPath="$PROJECT_DIR$/glHelper.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +119,8 @@
     <MESSAGE value="mod" />
     <MESSAGE value="trying to solve pitch camera error" />
     <MESSAGE value="added function cameraGetPosition" />
-    <option name="LAST_COMMIT_MESSAGE" value="added function cameraGetPosition" />
+    <MESSAGE value="added function setFloat" />
+    <option name="LAST_COMMIT_MESSAGE" value="added function setFloat" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
