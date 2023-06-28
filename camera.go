@@ -76,12 +76,12 @@ func (Camera *Camera) UpdateCamera(direction Direction, deltaT, xOffset, yOffest
 	Camera.yaw += xOffset
 	Camera.pitch += yOffest
 
-	if Camera.pitch > 90.0 {
-		Camera.pitch = 90.0
-	}
-	if Camera.pitch < -90.0 {
-		Camera.pitch = -90.0
-	}
+	//if Camera.pitch > 90.0 {
+	//	Camera.pitch = 90.0
+	//}
+	//if Camera.pitch < -90.0 {
+	//	Camera.pitch = -90.0
+	//}
 
 	Camera.updateVectors()
 }
