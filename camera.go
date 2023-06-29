@@ -26,6 +26,8 @@ const (
 	Backward
 	Left
 	Right
+	Upward
+	Downward
 	Nowhere
 )
 
@@ -73,6 +75,10 @@ func (Camera *Camera) UpdateCamera(direction Direction, deltaT, xOffset, yOffest
 		Camera.pos = Camera.pos.Sub(Camera.right.Mul(magnitude))
 	case Right:
 		Camera.pos = Camera.pos.Add(Camera.right.Mul(magnitude))
+	case Upward:
+		Camera.pos = Camera.pos.Add(Camera.up.Mul(magnitude))
+	case Downward:
+		Camera.pos = Camera.pos.Sub(Camera.up.Mul(magnitude))
 	case Nowhere:
 	}
 	xOffset *= Camera.mouseSens
