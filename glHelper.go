@@ -196,3 +196,8 @@ func Rotate3DMat4(angle float32, axis mgl32.Vec3) (mgl32.Mat4, error) {
 		return mgl32.Ident4(), errors.New("Matrix rotation error")
 	}
 }
+
+// MulVec3 performs vector multiplication between two vec3 vectors, returning the product of them
+func MulVec3(a, b mgl32.Vec3) mgl32.Vec3 {
+	return mgl32.Vec3{a.X() * b.X(), a.Y() * b.Y(), a.Z() * b.Z()}
+}
